@@ -1,0 +1,29 @@
+@model CsharpBeltExam.Models.Activityy
+
+<div class="row">
+    <div class="col">
+        <h2>@Model.Title</h2>
+    </div>
+    <div class="col mb-3">
+        @{
+            @if(@ViewBag.notParticipating.Contains(@Model))
+            {
+                <a class="btn btn-primary" href="/join/@Model.ActivityId" style="float: right;">Join</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" href="/cancel/@Model.ActivityId" style="float: right;">Leave</a>
+            }
+        }
+    </div>
+</div>
+<h6 class="mb-3">Event Coordinator: @ViewBag.Creator</h6>
+<h6>Description:</h6>
+<p>@Model.Description</p>
+<h6>Participants:</h6>
+<ul>
+    @foreach(Participant p in Model.Participants)
+    {
+        <li>@p.User.FirstName</li>
+    }
+</ul>

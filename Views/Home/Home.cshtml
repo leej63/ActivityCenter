@@ -1,0 +1,42 @@
+@model List<CsharpBeltExam.Models.Activityy>
+
+<h3>Welcome, @ViewBag.user.FirstName!</h3>
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Activity</th>
+            <th scope="col">Date and Time</th>
+            <th scope="col">Duration</th>
+            <!-- <th scope="col">Event Coordinator</th> -->
+            <th scope="col">No. of Participants</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach(Activityy activity in Model)
+            {
+                <tr>
+                    <td><a href="/activity/@activity.ActivityId">@activity.Title</a></td>
+                    <td>@activity.Date.ToString("M/dd") @activity.Date.ToString("h:mm tt")</td>
+                    <td>@activity.Duration @activity.DurationString</td>
+
+                    <td>@activity.Participants.Count</td>
+                    @if(@ViewBag.user.UserId == @activity.UserId)
+                    {
+                        <td><a href="/delete/@activity.ActivityId">Delete</a></td>
+                    }
+                    else if(@ViewBag.notParticipating.Contains(@activity))
+                    {
+                        <td><a href="/join/@activity.ActivityId">Join</a></td>
+                    }
+                    else
+                    {
+                        <td><a href="/cancel/@activity.ActivityId">Leave</a></td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary" href="/new">Add New Activity</a>
